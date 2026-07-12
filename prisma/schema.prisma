@@ -1,0 +1,54 @@
+// Prisma schema — demonstrates the project's DB conventions:
+//   - Table names are snake_case via @@map
+//   - Column names are camelCase in Prisma, snake_case in DB via @map
+//   - Every model carries createdAt / updatedAt
+//   - Relations use cascade deletes
+//
+// Switch `provider` to "postgresql" / "sqlite" etc. if you prefer another DB.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum TodoStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole @default(USER)
+  todos     Todo[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Todo {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?    @db.Text
+  status      TodoStatus @default(PENDING)
+  userId      Int        @map("user_id")
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@map("todos")
+}

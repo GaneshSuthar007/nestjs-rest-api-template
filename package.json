@@ -1,0 +1,62 @@
+{
+  "name": "nestjs-rest-api-template",
+  "version": "1.0.0",
+  "description": "Production-ready NestJS REST API template — modular architecture, Prisma ORM, JWT + API-key auth, Joi validation, standardized responses, pagination, and centralized error handling.",
+  "author": "Ganesh Suthar",
+  "license": "MIT",
+  "keywords": [
+    "nestjs",
+    "template",
+    "rest-api",
+    "prisma",
+    "jwt",
+    "joi",
+    "boilerplate",
+    "starter"
+  ],
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "prisma:generate": "prisma generate",
+    "prisma:studio": "prisma studio",
+    "migration:status": "prisma migrate status",
+    "migration:create": "prisma migrate dev --create-only",
+    "migration:dev": "prisma migrate dev",
+    "migration:deploy": "prisma migrate deploy"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/config": "^4.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/passport": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@prisma/client": "^6.5.0",
+    "bcrypt": "^6.0.0",
+    "helmet": "^8.0.0",
+    "joi": "^17.13.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "@types/passport-jwt": "^4.0.1",
+    "eslint": "^9.20.0",
+    "prettier": "^3.4.0",
+    "prisma": "^6.5.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.24.0"
+  }
+}
