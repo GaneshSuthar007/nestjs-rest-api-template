@@ -2,7 +2,7 @@
 
 A **production-ready, batteries-included NestJS REST API template** built from an architecture that has been running real production traffic. Clone it, rename it, and start shipping features — the infrastructure (auth, validation, error handling, logging, pagination, response contracts) is already done and consistent.
 
-[![CI](https://github.com/Ganesh-Suthar/nestjs-rest-api-template/actions/workflows/ci.yml/badge.svg)](../../actions)
+[![CI](https://github.com/GaneshSuthar007/nestjs-rest-api-template/actions/workflows/ci.yml/badge.svg)](../../actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ## Why this template?
