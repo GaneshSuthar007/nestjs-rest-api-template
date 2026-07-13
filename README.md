@@ -1,6 +1,6 @@
 # NestJS REST API Template
 
-A **production-ready, batteries-included NestJS REST API template** built from an architecture that has been running real production traffic. Clone it, rename it, and start shipping features — the infrastructure (auth, validation, error handling, logging, pagination, response contracts) is already done and consistent.
+A **NestJS REST API template** built from patterns refined across a decade of Node.js backends — and running in production today. Clone it, rename it, start shipping features. The infrastructure (auth, validation, error handling, logging, pagination, response contracts) is already done and consistent.
 
 [![CI](https://github.com/GaneshSuthar007/nestjs-rest-api-template/actions/workflows/ci.yml/badge.svg)](../../actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -83,6 +83,12 @@ Most NestJS starters give you an empty `AppModule` and leave every architectural
 | **Infrastructure** | `src/core/` | Cross-cutting machinery (auth, DB, logging, validation, response shape). Written once, imported everywhere, rarely modified. |
 | **Features** | `src/apis/` | One folder per business capability. Each is self-contained: module + controller + service + DTOs. 95% of your work happens here. |
 | **Shared** | `src/common/` | Plain constants, types, strings, and decorators with no framework wiring — safe to import from anywhere without circular-dependency risk. |
+
+### Why the boundary matters
+
+This isn't theoretical. This architecture recently went from **TypeORM to Prisma** — and the controllers, services, validation schemas, and response contracts didn't change. The swap was contained to `src/core/database/`, because the feature modules never knew which ORM was underneath them in the first place.
+
+That's the whole argument for putting infrastructure behind a boundary: you don't feel the benefit until the day you have to change something you assumed you never would.
 
 ---
 
@@ -233,7 +239,7 @@ async adminDelete(@Param("id", ParseIntPipe) id: number): Promise<Response> { ..
 
 | Convention | Rule |
 |---|---|
-| **Validation** | Joi only — **do not** introduce `class-validator`/`class-transformer`. One schema per endpoint, colocated with its DTO. |
+| **Validation** | Joi, not `class-validator`. A deliberate choice — nested JSON with `class-validator` means a class per level (`@ValidateNested()` + `@Type()` all the way down), and it gets unwieldy fast. The trade-off is real: the DTO and the schema are maintained separately, and you lose `@nestjs/swagger`'s auto-generation from decorators. Worth it here; reasonable people disagree. One schema per endpoint, colocated with its DTO. |
 | **Messages** | All user-facing strings live in `src/common/messages.ts`, namespaced per feature. |
 | **Responses** | Controllers return `Promise<Response>` built by `ResponseUtil` — never hand-rolled objects. |
 | **Errors** | Services throw `HttpException` subclasses; unexpected errors are wrapped as `BadRequestException`. The global filter formats everything. |
